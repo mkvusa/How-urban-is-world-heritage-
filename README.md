@@ -30,25 +30,87 @@ The datasets in this repository include:
 ## 1. Requirements
 
 This workflow requires:
-- [QGIS](https://www.qgis.org/fr/site/)[Free]
-- [FME](https://www.safe.com/)[Licensed]
+- [ArcGIS](https://www.arcgis.com/index.html)[Licensed]
+- [Gurobi](https://www.gurobi.com/)[Licensed]
+- [R](https://www.r-project.org) [Free]
 - [Python](https://www.python.org) [Free] 
 - [LaTeX](https://www.latex-project.org) [Free]
 - [Excel](https://www.microsoft.com/en-us/microsoft-365/excel)[Licensed]
 
 Other great languages and software may also be used.
-- [R](https://www.r-project.org) [Free]
-- [Stata](https://www.stata.com) [Licensed]
-- [ArcGIS](https://www.arcgis.com/index.html)[Licensed]
+- [QGIS](https://www.qgis.org/fr/site/)[Free]
 
-## 2. Setup
-Depending on how the raw data is collected,
-1. Group the properties into folders for UNESCO regions, i.e., EUR, LAC, APA, AFR, and ARB.
-2. For each region, group the shapefiles of the properties into categories of REPORT and NOT REPORTING for properties that are either reporting or not reporting on urban development.
-3. Use Python or whatever works to match names of folders to names in the attribute Excel sheet of the world heritage list downloadable from [UNESCO website](https://whc.unesco.org/en/syndication).
-4. Use qGIS to merge the shapefiles by their regions and then edit the attribute table by adding the value Status, Showing"Reporting" or "Not Reporting."
-5. Join the attributes of the attribute table from the world heritage list to the merged shapefiles in set up 3.
-6. Provide core zones in shapefile format to DLR or use World Footprint layer evolution versio for assesment of Built-up change per year.
+
+## 2. Setup (GIS → MILP)
+
+### 2.1 GIS Setup
+
+1. **Folder structure**
+data/
+├── raw/ # Unprocessed input data (CBS, OSM, power, POI)
+├── processed/ # Cleaned datasets for analysis
+├── spatial/ # Shapefiles for roads, grid, demand, and POIs
+└── temporal/ # Seasonal and time-of-day data
+
+3. **Coordinate Reference System (CRS)**
+- Standardize all spatial layers to **Amersfoort / RD New (EPSG:28992)** for consistent distance and time calculations.
+- Save harmonized files to `data/processed/spatial`.
+
+3. **Study area and clipping**
+- Define the municipal or neighborhood boundary for the study.
+- Clip all datasets to the study extent.
+
+4. **Road network**
+- Extract drivable edges from **OpenStreetMap (OSM)**.
+- Clean topology and assign travel speeds (km/h) and lengths (km).
+- Export a routable graph (`roads.graphml`) for shortest-path calculations.
+
+5. **Candidate EVCS sites (set J)**
+- Generate candidate points based on existing chargers, POIs, zoning parcels, or suitability grids.
+- Add attributes:
+  - `j_id`, `x`, `y`, `land_cost (lc_j)`, `grid_conn`, `neighborhood`, `suitability_score`
+- Save as `candidates.geojson`.
+
+6. **Demand locations (set I)**
+- Define demand centroids (e.g., neighborhood centers or EV user clusters).
+- Add attributes:
+  - `i_id`, `x`, `y`, `EV_demand_MWh_m` (per season) or `EV_counts`
+- Save as `demand.geojson`.
+
+7. **Power network**
+- Import MV/LV nodes and lines if available.
+- Snap candidate stations to the nearest LV/MV node.
+- Compute distance to grid and connection type.
+- Save as `grid_nodes.geojson` and `grid_links.geojson`.
+
+8. **Suitability scoring**
+- Compute site suitability using multi-criteria layers (roads, power, POIs, land use).
+- Normalize scores to `[0,1]` and save as `candidates_suitability.parquet`.
+
+9. **Travel-time matrix**
+- Use the cleaned road network to compute shortest paths between demand and candidate sites.
+- Calculate \( tt_{ij} \) in **hours** and save as:
+  ```
+  tt_ij.parquet: [i_id, j_id, tt_h]
+  ```
+
+10. **Temporal profiles (sets m, t)**
+ - Prepare data for grid cost (`C_grid_mt`), seasonal weights (`w_m`), and demand shares.
+ - Save as `temporal_profiles.parquet`.
+
+---
+
+### 2.2 MILP Setup
+
+1. **Sets**
+- \( i \): demand locations  
+- \( j \): candidate sites  
+- \( m \): seasons  
+- \( t \): time-of-day intervals  
+- \( b \): battery types  
+
+2. **Input files**
+
 
 ## 3. Files
 ##### `PUP.py`
