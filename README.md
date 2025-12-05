@@ -110,6 +110,53 @@ data/
 - \( b \): battery types  
 
 2. **Input files**
+candidates.geojson/parquet → lc_j, grid attributes
+bess_catalog.csv → bess_jb, cost_abc_jb
+tt_ij.parquet → tt_ij (hours)
+temporal_profiles.parquet → C_grid_mt, w_m
+demand.geojson/parquet → EV_demand_i,m or EV_demand_i,m,t
+
+3. **Decision variables**
+- Binary: `Y_j`, `B_jb`
+- Continuous (≥ 0): `X_jimt`, `S_ijmt`, `G_jmt`, `Z_jmt`, `I_jmt`
+
+4. **Objectives**
+- **Monetary Cost (MC):**
+  \[MC = \sum_j lc_j Y_j + \sum_{j,b} bess_{jb}\,abc_{jb}\,B_{jb} + \sum_{j,m,t} C_{grid_{mt}}\,w_m\,G_{jmt}\]
+- **Travel Time (TT):**
+  \[TT = \sum_{i,j,m,t} (S_{ijmt} + X_{jimt})\,tt_{ij}\]
+
+5. **Core constraints**
+- Site–battery link:  
+  \[\sum_b B_{jb} = Y_j \quad \forall j\]
+- Inventory dynamics:  
+  \[I_{jmt} = I_{jm,t-1} + \sum_i S_{ijmt} + G_{jmt} - Z_{jmt} - \sum_i X_{jimt}\]
+- Capacity bounds:   \[I_{jmt} \le \sum_b bess_{jb} B_{jb}  \]
+- Non-negativity and binary conditions for all variables.
+
+6. **Optimization runs**
+- **MC-first:** minimize MC, then fix \( MC^* \) and minimize TT.  
+- **TT-first:** minimize TT, then fix \( TT^* \) and minimize MC.  
+- Store both pay-off results for comparison.
+
+7. **Units**
+- Distance → km  
+- Time → hours  
+- Energy → MWh  
+- Cost → k€  
+
+8. **Output folders**
+results/
+├── optimization/
+│ ├── MC_first/
+│ └── TT_first/
+├── figures/
+└── summary_tables/
+
+9. **Reproducibility**
+- Record solver version, Gurobi parameters, and random seed.
+- Store run configurations and summary logs for each optimization sequence.
+
 
 
 ## 3. Files
