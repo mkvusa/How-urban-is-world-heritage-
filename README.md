@@ -14,10 +14,18 @@ To use it, follow the setup and instructions below.
 7. [Acknownledge](https://github.com/mkvusa/heritagezoning/blob/main/README.md#5-acknowledgement)
 8. [Further Reading](https://github.com/mkvusa/heritagezoning/blob/main/README.md#further-reading)
 
-## Workflow and datasets
-The workflow illustrates the step-by-step approach for this project. The original shapefiles were generated and collected from [The International Center on Space Technologies for Natural and Cultural Heritage (HIST)](http://www.unesco-hist.org/index.php?r=en/index) as such are not provided in this repository but can be accessed by request from the institution. The World Human Settlement Evolution was processed and accessed through the [German Aerospace Center(DLR)](https://www.dlr.de/EN/Home/home_node.html) and can be downloaded and processed by request through [German Aerospace Center(DLR)](https://geoservice.dlr.de/web/maps/eoc:wsfevolution).
-The datasets provided in this repository are the results of the spatial, temporal analysis of the World Human footprint layer in the world heritage properties showing the [built-up pixel count](https://github.com/mkvusa/heritagezoning/blob/main/_PixelCount_WSFEvo_ShapesBuffer_transposed.xlsx) of each year per property from the year 1985-2015. Additionally, these excel datasets show the [names of the World Heritage properties that were assessed by region and by category of reporting on urban development and not reporting on urban development](https://github.com/mkvusa/heritagezoning/delete/main/_PixelCount_WSFEvo_ShapesNoBuffer_transposed_renamed.xlsx).
-![Workflow of the project](https://github.com/mkvusa/heritagezoning/blob/main/Regional%20maps/WorkFLow_HIST_new_edited.jpg)
+## Workflow and Datasets
+
+The workflow below illustrates the step-by-step process used in this project. Data were collected from multiple institutions and publications, primarily from **CBS** and other Dutch agencies that provide open-access spatial and socioeconomic datasets. For detailed data sources and preprocessing methods, refer to the published paper.
+
+Spatial data, including **road networks**, **power grids**, and **points of interest**, can be obtained from **OpenStreetMap** or **CBS**. All data used in this project are publicly available.
+
+The datasets in this repository include:
+- Outputs from **spatial and temporal analyses**, including spatial regression and nearest-neighbor interpolation, used to estimate the probability of site suitability for EV charging stations.  
+- An **Excel file** containing the results of the optimization runs and supporting data for visualization and analysis.
+
+![Workflow of the project](https://github.com/mkvusa/OptimisationEnergyMobilityHubs/blob/main/location_allocation_optmization.jpg)
+
 
 ## 1. Requirements
 
