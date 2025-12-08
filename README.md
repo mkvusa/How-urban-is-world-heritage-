@@ -161,25 +161,19 @@ results/
 
 ## 3. Files
 ##### `PUP.py`
-This was the Python script used to retrieve the World Heritage shapefiles on the Protected Urban Planets Geodataset for decision-making on which database was suitable for analysis in the project. See results of the [assessment](https://github.com/mkvusa/heritagezoning/blob/main/Data%20Assessment.pptx) 
-
+THis iss the MILP script[]()
 
 ## 4. Writing
-- Keep a set of continuously updated slides reflecting the current state and vision of the project.
 - Online LaTeX editing tools such as [Overleaf](https://www.overleaf.com/) are suffiecient for simultaneous editing and comments.
-- Keep all `.bib` references organized in overleaf.
+- Keep all `.bib` references organized in Overleaf.
 
 ## 5. Acknowledgement
-The workflows and datasets of this paper can be used under the [Creative Common License (Attribution CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). Please give appropriate credit, such as providing a link to our paper or to this GitHub repository. The copyright of all the downloaded and processed images belongs to the image owners.
+The workflows and datasets of this paper can be used under the [Creative Commons License (Attribution CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). Please give appropriate credit, such as providing a link to our paper or to this GitHub repository. The copyright of all the downloaded and processed images belongs to the image owners.
 
 ## 6. Further Reading
 
-Here is the link to [project report](https://docs.google.com/document/d/1z2x7LImbpOdwTfusMivY_bJPvH6AD3ctfQOXbscvRqc/edit)
-
-Here is the link to the [Graphical Summary](https://docs.google.com/presentation/d/1FWlQp0J-vXN2YH4g35VbUQuPiCwq16CPVWzjlesev10/edit#slide=id.g120edecb748_2_261)
+Here is the link to [project report](https://www.nwo.nl/en/projects/kich1ed0320012)
 
 We are using Draw.IO to create the project diagrams.
 
-Here is a link to [project_data_assessment_process](https://drive.google.com/file/d/1P1xcFAEAEWp0NpKyCJqnSuvNw9EEZyqd/view?usp=sharing)
-
-Here is a link for further reading on the [World Settlement Footprint Evolution](https://visat.urban-tep.eu/datasets/map?darkMode=true&viewKey=951b1250-ba02-4b6a-b00b-df4d0dfb5759)
+Here is a link for further reading on the [Foundational Publication](https://www.tandfonline.com/doi/full/10.1080/15568318.2025.2528085)
